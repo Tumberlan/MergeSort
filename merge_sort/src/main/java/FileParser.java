@@ -18,11 +18,15 @@ public class FileParser {
     String fileSeparator = System.getProperty("file.separator");
     private QuickSort quickSort = new QuickSort();
     private String command;
+    private boolean isInt;
+    private boolean lowHigh;
 
-    public FileParser(String pathToDirectory, String pathToTDirectory, String cmd) {
+    public FileParser(String pathToDirectory, String pathToTDirectory, String cmd,boolean lowhigh, boolean isint) {
         this.pathToInputDirectory = pathToDirectory;
         this.pathToTmpDirectory = pathToTDirectory;
         this.command = cmd;
+        this.lowHigh = lowhigh;
+        this.isInt = isint;
     }
 
 
@@ -93,7 +97,16 @@ public class FileParser {
                     }
                     string = bufferedReader.readLine();
                 }
+
+
                 quickSort.qSort(tmp_arr,0,iter_counter-1);
+                int[] reverse_arr = new int[iter_counter];a
+                if(!lowHigh){
+                    for (int i = 0; i < iter_counter; i++){
+                        reverse_arr[i] = tmp_arr[iter_counter-1-i];
+                    }
+                    tmp_arr = reverse_arr;
+                }
                 for(int i = 0; i < iter_counter; i++){
                     printStream.println(tmp_arr[i]);
                 }

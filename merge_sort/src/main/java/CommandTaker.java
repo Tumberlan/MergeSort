@@ -4,9 +4,9 @@ public class CommandTaker {
 
     Scanner scanner = new Scanner(System.in);
 
-    public String parseCommand(String[] args){
+    public String parseCommand(String[] args, int idx){
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 1; i < args.length; i++){
+        for(int i =idx; i < args.length; i++){
             stringBuilder.append(args[i]).append(";");
         }
 

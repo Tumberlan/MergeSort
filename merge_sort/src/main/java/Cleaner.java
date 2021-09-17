@@ -19,7 +19,6 @@ public class Cleaner {
         Path path = Paths.get(pathToTmpDirectory);
         List<Path> paths = FileLister.listFiles(path);
         paths.forEach(x->{
-            System.out.println(x.getFileName().toString());
             File file = new File(pathToTmpDirectory,x.getFileName().toString());
             File newFile = new File(file.getAbsolutePath());
             newFile.delete();

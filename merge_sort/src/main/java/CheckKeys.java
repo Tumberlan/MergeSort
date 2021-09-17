@@ -13,10 +13,12 @@ public class CheckKeys {
         }
         if(str.equals("-s")){
             params[1] = false;
+            params[2] = true;
             checker = true;
         }
         if(str.equals("-i")){
             params[1] = true;
+            params[2] = true;
             checker = true;
         }
         if(checker){

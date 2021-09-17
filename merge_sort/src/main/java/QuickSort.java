@@ -25,4 +25,29 @@ public class QuickSort {
         }
 
     }
+
+    public void qSortString(InFileString[] inFileStrings, int first, int last){
+        if(first < last) {
+            int left = first;
+            int right = last;
+            int middle = inFileStrings[(left + right) / 2].number;
+            while (left <= right) {
+                while (inFileStrings[left].number < middle) {
+                    left++;
+                }
+                while (inFileStrings[right].number > middle) {
+                    right--;
+                }
+                if (left <= right) {
+                    InFileString tmp = inFileStrings[left];
+                    inFileStrings[left] = inFileStrings[right];
+                    inFileStrings[right] = tmp;
+                    left++;
+                    right--;
+                }
+            }
+            qSortString(inFileStrings, first, right);
+            qSortString(inFileStrings, left, last);
+        }
+    }
 }

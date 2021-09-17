@@ -10,11 +10,12 @@ public class mergeClass {
 
     private String pathToOutDirectory;
     private String pathToTmpDirectory;
-
+    private String outFileName;
     FileLister fileLister = new FileLister();
-    public mergeClass(String pathToOutDirectory, String pathToTmpDirectory) {
+    public mergeClass(String pathToOutDirectory, String pathToTmpDirectory, String outputFileName) {
         this.pathToOutDirectory = pathToOutDirectory;
         this.pathToTmpDirectory = pathToTmpDirectory;
+        this.outFileName = outputFileName;
     }
 
     String fileSeparator = System.getProperty("file.separator");
@@ -35,7 +36,7 @@ public class mergeClass {
                 e.printStackTrace();
             }
         });
-        String tmp_file_name = "resultfile.txt";
+        String tmp_file_name = outFileName;
         String relativePath = pathToOutDirectory
                 + fileSeparator + tmp_file_name;
         File result_file = new File(relativePath);
@@ -70,11 +71,6 @@ public class mergeClass {
                 isEmpty[fileVector.indexOf(x)] = true;
             }else{
                 if (firstTry.get()) {
-<<<<<<< HEAD
-                    System.out.println("top number: " + x.getTopNumber() +
-                            "; minimum: " + minimum.get());
-=======
->>>>>>> 6686b0a60b436e2404b215a795a26c0b5d6872d9
                     minimum.getAndSet(x.getTopNumber());
                     firstTry.getAndSet(false);
                     idx.getAndSet(fileVector.indexOf(x));
@@ -86,15 +82,6 @@ public class mergeClass {
                 }
             }
         });
-
-<<<<<<< HEAD
-        System.out.println("EMPTY: ");
-        for(int i = 0; i < fileVector.size(); i++){
-            System.out.println(isEmpty[i]);
-        }
-        System.out.println("Last idx: " + idx.get());
-=======
->>>>>>> 6686b0a60b436e2404b215a795a26c0b5d6872d9
         fileVector.get(idx.get()).readNextNumber();
 
         for(int i = 0; i < fileVector.size(); i++){

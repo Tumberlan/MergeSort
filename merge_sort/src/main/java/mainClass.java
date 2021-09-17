@@ -6,8 +6,7 @@ public class mainClass {
         String inputFilesPath = "src\\main\\resources\\inFiles";
         String processFilesPath = "src\\main\\resources\\processFiles";
         String outputFilesPath = "src\\main\\resources\\outFiles";
-        Cleaner cleaner = new Cleaner (processFilesPath);
-        cleaner.clean();
+
         if(args.length < 1){
             System.out.println("No output file name");
             return;
@@ -16,6 +15,9 @@ public class mainClass {
             System.out.println("No input files names");
             return;
         }
+
+        Cleaner cleaner = new Cleaner (processFilesPath);
+        cleaner.clean();
         CommandTaker commandTaker = new CommandTaker();
         FileParser fileParser = new FileParser(inputFilesPath,processFilesPath, commandTaker.parseCommand(args));
         mergeClass mgClass = new mergeClass(outputFilesPath, processFilesPath, args[0]);

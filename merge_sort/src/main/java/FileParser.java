@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -16,19 +17,40 @@ public class FileParser {
     private int linesToSkip = 0;
     String fileSeparator = System.getProperty("file.separator");
     private QuickSort quickSort = new QuickSort();
+    private String command;
 
-    public FileParser(String pathToDirectory, String pathToTDirectory) {
+    public FileParser(String pathToDirectory, String pathToTDirectory, String cmd) {
         this.pathToInputDirectory = pathToDirectory;
         this.pathToTmpDirectory = pathToTDirectory;
+        this.command = cmd;
     }
 
-    public void parse()throws IOException {
+
+    public List<String> openCurrentFiles() throws IOException {
+        String[] sub_str = command.split(";");
         Path path = Paths.get(pathToInputDirectory);
         List<Path> paths = FileLister.listFiles(path);
+        List<String> filesName = new LinkedList<String>();
+        paths.forEach(x->{
+            for(int i = 0; i < sub_str.length; i++){
+                if(x.getFileName().toString().equals(sub_str[i])){
+                    filesName.add(sub_str[i]);
+                }
+            }
+        });
+        return filesName;
+    }
+
+
+    public void parse()throws IOException {
+
+        List<String> filesName = openCurrentFiles();
+        if(filesName == null){
+            System.out.println("no such files");
+            return;
+        }
         AtomicInteger file_idx = new AtomicInteger();
-        paths.forEach(x -> {
-            System.out.println(x.getFileName().toString());
-            System.out.println(pathToInputDirectory);
+        filesName.forEach(x->{
             boolean go_then = false;
             while(!go_then){
                 String tmp_file_name = "tmpfile"+file_idx+".txt";
@@ -41,34 +63,9 @@ public class FileParser {
         });
     }
 
-    public void printInf(Path path) throws IOException {
-        File file = new File(pathToInputDirectory, path.getFileName().toString());
-        try {
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String string = bufferedReader.readLine();
-            System.out.println(path);
-            System.out.println("File text: ");
-            while (string != null){
-                String parse_symbol = " ";
-                String[] sub_str = string.split(parse_symbol);
-
-                for(int i = 0; i < sub_str.length;i++){
-                    int a  = Integer.parseInt(sub_str[i]);
-                    System.out.println("It has: "+(a+1));
-                }
-                System.out.println(string);
-                string = bufferedReader.readLine();
-            }
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public boolean takeInf(Path path, File out_file){
+    public boolean takeInf(String fileName, File out_file){
         boolean result_check = true;
-        File in_file = new File(pathToInputDirectory, path.getFileName().toString());
+        File in_file = new File(pathToInputDirectory, fileName);
         try {
             FileOutputStream fos = new FileOutputStream(out_file);
             PrintStream printStream = new PrintStream(fos);
@@ -94,13 +91,10 @@ public class FileParser {
                             result_check = false;
                         }
                     }
-                    System.out.println(string);
                     string = bufferedReader.readLine();
                 }
                 quickSort.qSort(tmp_arr,0,iter_counter-1);
-                System.out.println("Sorted: ");
                 for(int i = 0; i < iter_counter; i++){
-                    System.out.println(tmp_arr[i]);
                     printStream.println(tmp_arr[i]);
                 }
                 if(!result_check){
@@ -116,8 +110,5 @@ public class FileParser {
         return true;
     }
 
-    public void parseOriginalFiles(){
-
-    }
 
 }

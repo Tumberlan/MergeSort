@@ -80,12 +80,10 @@ public class mergeClass {
             Integer new_number = x.getTopNumber();
             System.out.println("Top number2: " + new_number);
             if(new_number == null){
-                System.out.println("idx: " + fileVector.indexOf(x)+"  GAY");
                 isEmpty[fileVector.indexOf(x)] = true;
             }else{
                 System.out.println("try: " + firstTry.get());
                 if (firstTry.get()) {
-                    System.out.println("idx: " + fileVector.indexOf(x)+ " ASS");
                     System.out.println("top number: " + x.getTopNumber() +
                             "; minimum: " + minimum.get());
                     minimum.getAndSet(x.getTopNumber());
@@ -94,18 +92,13 @@ public class mergeClass {
                     idx.getAndSet(fileVector.indexOf(x));
                     System.out.println("idx: " +  idx.get());
                 } else {
-                    System.out.println("top number: " + x.getTopNumber() +
-                            "; minimum: " + minimum.get());
                     if (x.getTopNumber() < minimum.get()) {
-                        System.out.println("idx: " + fileVector.indexOf(x)+ " SHIT");
                         minimum.getAndSet(x.getTopNumber());
                         idx.getAndSet(fileVector.indexOf(x));
                     }
                 }
             }
         });
-
-        //System.out.println(minimum.get());
 
         System.out.println("EMPTY: ");
         for(int i = 0; i < fileVector.size(); i++){
@@ -120,29 +113,8 @@ public class mergeClass {
                 fileVector.remove(i);
             }
         }
-
-
         if(!firstTry.get()) {
             printStream.println(minimum.get());
         }
-        /*
-        boolean isChanged = false;
-        boolean firstTry = true;
-        boolean[] isEmpty = new boolean[fileOpeners.length];
-        for(int i = 0; i < fileOpeners.length; i++){
-            isEmpty[i] = false;
-        }
-        int min_number = 0;
-        for(int i = 0; i < fileOpeners.length; i++){
-            Integer newNumber = fileOpeners[i].getTopNumber();
-            if(firstTry)
-            if(fileOpeners[i].getTopNumber() < min_number){
-                min_number = fileOpeners[i].getTopNumber();
-                isChanged = true;
-            }
-        }
-        if(!isChanged){
-            fileOpeners[0].readNextNumber();
-        }*/
     }
 }

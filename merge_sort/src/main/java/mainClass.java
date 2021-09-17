@@ -32,7 +32,12 @@ public class mainClass {
             System.out.println("few arguments");
             return;
         }
-
+        System.out.println(args[idxs[0]].split(".t").length);
+        System.out.println(args[idxs[0]].split(".t")[0]);
+        if(args[idxs[0]].split("\\.").length<2){
+            System.out.println("Wrong file names");
+            return;
+        }
         Cleaner cleaner = new Cleaner (processFilesPath);
         cleaner.clean();
         CommandTaker commandTaker = new CommandTaker();

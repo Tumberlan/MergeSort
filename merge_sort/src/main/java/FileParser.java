@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,13 +39,23 @@ public class FileParser {
         Path path = Paths.get(pathToInputDirectory);
         List<Path> paths = FileLister.listFiles(path);
         List<String> filesName = new LinkedList<String>();
+        AtomicBoolean normalFile = new AtomicBoolean(false);
         paths.forEach(x->{
             for(int i = 0; i < sub_str.length; i++){
+                if(sub_str[i].split("\\.").length < 2){
+                    System.out.println("wrong input files");
+                    System.exit(1);
+                }
                 if(x.getFileName().toString().equals(sub_str[i])){
                     filesName.add(sub_str[i]);
+                    normalFile.getAndSet(true);
                 }
             }
         });
+        if(!normalFile.get()){
+            System.out.println("no such input files");
+            System.exit(1);
+        }
         return filesName;
     }
 

@@ -32,8 +32,6 @@ public class mainClass {
             System.out.println("few arguments");
             return;
         }
-        System.out.println(args[idxs[0]].split(".t").length);
-        System.out.println(args[idxs[0]].split(".t")[0]);
         if(args[idxs[0]].split("\\.").length<2){
             System.out.println("Wrong file names");
             return;
@@ -45,6 +43,6 @@ public class mainClass {
         mergeClass mgClass = new mergeClass(outputFilesPath, processFilesPath, args[idxs[0]], params[0], params[1]);
         fileParser.parse();
         mgClass.sort();
-        System.out.println("Look at 'outFiles' directory");
+        System.out.println("Look at 'src/main/resources/outFiles' directory");
     }
 }

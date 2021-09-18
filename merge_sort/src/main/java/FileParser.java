@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class FileParser {
 
-    //private static final int = 12;
+    private static final int arrayLen = 100;
     FileLister fileLister = new FileLister();
     private String pathToInputDirectory;
     private String pathToTmpDirectory;
@@ -91,7 +91,7 @@ public class FileParser {
         try {
             FileOutputStream fos = new FileOutputStream(out_file);
             PrintStream printStream = new PrintStream(fos);
-            int[] tmp_arr = new int[5];
+            int[] tmp_arr = new int[arrayLen];
             int iter_counter = 0;
             try {
                 FileReader fileReader = new FileReader(in_file);
@@ -109,7 +109,7 @@ public class FileParser {
                             System.exit(1);
                         }
                         int a = Integer.parseInt(sub_str[i]);
-                        if (iter_counter != 5) {
+                        if (iter_counter != arrayLen) {
                             tmp_arr[iter_counter] = a;
                             iter_counter++;
                             linesToSkip++;
@@ -150,8 +150,8 @@ public class FileParser {
         try {
             FileOutputStream fos = new FileOutputStream(out_file);
             PrintStream printStream = new PrintStream(fos);
-            InFileString[] tmp_arr = new InFileString[5];
-            for (int i = 0; i < 5; i++){
+            InFileString[] tmp_arr = new InFileString[arrayLen];
+            for (int i = 0; i < arrayLen; i++){
                 tmp_arr[i] = new InFileString("");
             }
             int iter_counter = 0;
@@ -164,7 +164,7 @@ public class FileParser {
                 }
                 while (string != null && result_check) {
                     String a_str = string;
-                    if (iter_counter != 5) {
+                    if (iter_counter != arrayLen) {
                         tmp_arr[iter_counter].putString(a_str);
                         iter_counter++;
                         linesToSkip++;
